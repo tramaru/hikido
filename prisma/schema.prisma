@@ -13,9 +13,10 @@ datasource db {
 model Event {
   id Int @id @default(autoincrement())
   title String @default("")
-  audioUrl String @default("")
-  transcriptUrl String @default("")
-  transcript String @default("")
-  createdAt DateTime @default(now()) @db.Timestamp(6)
-  updatedAt DateTime @default(now()) @db.Timestamp(6)
+  audioUrl String @default("") @map("audio_url")
+  transcriptUrl String @default("") @map("transcript_url")
+  transcript String @db.Text
+  createdAt DateTime @default(now()) @db.Timestamp(6) @map("created_at")
+  updatedAt DateTime @default(now()) @db.Timestamp(6) @map("updated_at")
+  @@map("events")
 }

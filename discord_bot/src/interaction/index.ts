@@ -6,7 +6,6 @@ import { leave } from "./leave"
 import { record } from "./record"
 import { upload } from "./uploadt"
 
-
 export const interactionHandlers = new Collection<
   string,
   (

@@ -1,0 +1,5 @@
+/dist
+/recordings/*
+!/recordings/.keep
+/recorded_outputs/*
+!/recorded_outputs/.keep

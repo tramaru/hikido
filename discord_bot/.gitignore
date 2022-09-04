@@ -1,3 +1,4 @@
+/dist
 /recordings/*
 !/recordings/.keep
 /recorded_outputs/*

@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  next:
+    build:
+      context: ./next
+      dockerfile: ./Dockerfile
+    tty: true
+    volumes:
+      - ./next:/app
+    ports:
+      - "3000:3000"
+    command: "yarn dev"

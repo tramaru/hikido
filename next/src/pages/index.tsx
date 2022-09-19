@@ -6,10 +6,14 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Container from '@mui/material/Container';
 import Header from 'components/Header'
 import { PrismaClient } from '@prisma/client';
+import { GetServerSideProps } from "next";
+import { EventProps } from 'types/EventProps';
 
 const theme = createTheme();
 
-const Home: NextPage = (events) => {
+type Props = { events: EventProps[] }
+
+const Home: NextPage<Props> = (props: Props) => {
   return (
     <div>
       <Head>
@@ -20,7 +24,7 @@ const Home: NextPage = (events) => {
         <Container maxWidth='lg'>
           <Header />
           <main>
-            <Events events={events} />
+            <Events events={ props.events } />
           </main>
         </Container>
       </ThemeProvider>
@@ -28,7 +32,8 @@ const Home: NextPage = (events) => {
   );
 }
 
-export async function getServerSideProps() {
+
+export const getServerSideProps: GetServerSideProps = async () => {
   const prisma = new PrismaClient();
   const selectedEvents = await prisma.event.findMany();
   const events = JSON.parse(JSON.stringify(selectedEvents));
@@ -39,4 +44,4 @@ export async function getServerSideProps() {
   }
 }
 
-export default Home
+export default Home;

@@ -3,12 +3,12 @@ import Event from 'components/Event';
 import Grid from '@mui/material/Grid';
 import Divider from '@mui/material/Divider';
 
-export default function Events() {
+export default function Events(props) {
   return (
     <Grid container spacing={2}>
       <Divider />
-      {[1,2,3].map((index) => (
-        <Event key={index} />
+      {Object.entries(props.events.events).map((event, index) => (
+        <Event key={index} event={event} />
       ))}
     </Grid>
   );

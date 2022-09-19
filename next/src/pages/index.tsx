@@ -5,10 +5,11 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import Container from '@mui/material/Container';
 import Header from 'components/Header'
+import { PrismaClient } from '@prisma/client';
 
 const theme = createTheme();
 
-const Home: NextPage = () => {
+const Home: NextPage = (events) => {
   return (
     <div>
       <Head>
@@ -19,12 +20,23 @@ const Home: NextPage = () => {
         <Container maxWidth='lg'>
           <Header />
           <main>
-            <Events />
+            <Events events={events} />
           </main>
         </Container>
       </ThemeProvider>
     </div>
   );
+}
+
+export async function getServerSideProps() {
+  const prisma = new PrismaClient();
+  const selectedEvents = await prisma.event.findMany();
+  const events = JSON.parse(JSON.stringify(selectedEvents));
+  return {
+    props: {
+      events,
+    }
+  }
 }
 
 export default Home

@@ -10,17 +10,17 @@ import TranscribeButton from 'components/TranscribeButton';
 //  ボタン表示の状態を持つ
 //  テキスト表示状態を持つ
 
-export default function Event() {
+export default function Event(props) {
   return (
     <Grid item xs={12} md={6}>
       <CardActionArea component='a' href='#'>
         <Card sx={{ display: 'flex' }}>
           <CardContent sx={{ flex: 1 }}>
             <Typography variant='subtitle1' color='text.secondary'>
-              2022/01/01
+              { props.event[1].createdAt }
             </Typography>
             <Typography component='h2' variant='h5'>
-              OSS コードリーディング
+              { props.event[1].title }
             </Typography>
             <Box mt={1.5}>
               <TranscribeButton />

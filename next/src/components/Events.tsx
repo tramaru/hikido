@@ -1,15 +1,19 @@
-import Header from 'components/Header'
 import Event from 'components/Event';
 import Grid from '@mui/material/Grid';
 import Divider from '@mui/material/Divider';
+import { EventProps } from 'types/EventProps';
 
-export default function Events(props) {
+type Props = { events: EventProps[] }
+
+const Events = (props: Props) => {
   return (
     <Grid container spacing={2}>
       <Divider />
-      {Object.entries(props.events.events).map((event, index) => (
-        <Event key={index} event={event} />
+      {props.events.map((event, _i) => (
+        <Event key={event.id} event={event} />
       ))}
     </Grid>
   );
 }
+
+export default Events

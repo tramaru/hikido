@@ -7,12 +7,14 @@ import Box from '@mui/material/Box';
 import { EventProps } from 'types/EventProps';
 import Button from '@mui/material/Button';
 import { Dispatch, SetStateAction, useState } from 'react';
+import Alert from '@mui/material/Alert';
 
 type Props = { event: EventProps }
 
 export default function Event(props: Props) {
   const [transcript, setTranscript] = useState(props.event.transcript)
-  const [_buttonDisplay, setButtonDisplay] = useState(transcript === "")
+  const [buttonDisplay, setButtonDisplay] = useState(transcript === "")
+  const [errorDisplay, setErrorDisplay] = useState(false)
 
   return (
     <Grid item xs={12} md={6}>
@@ -32,11 +34,15 @@ export default function Event(props: Props) {
               {
                 renderTranscribeButton(
                   props.event.id,
-                  transcript,
+                  buttonDisplay,
                   setTranscript,
                   setButtonDisplay,
+                  setErrorDisplay
                 )
               }
+            </Box>
+            <Box mt={1.5}>
+              {renderErrorMessage(errorDisplay)}
             </Box>
           </CardContent>
         </Card>
@@ -57,15 +63,16 @@ const renderTranscript = (transcript: string | undefined) => {
 
 const renderTranscribeButton = (
   eventId: number,
-  transcript: string | undefined,
+  buttonDisplay: boolean,
   setTranscript: Dispatch<SetStateAction<string | undefined>>,
   setButtonDisplay: Dispatch<SetStateAction<boolean>>,
+  setErrorMessage: Dispatch<SetStateAction<boolean>>,
 ) => {
-  if (transcript === "" || transcript === undefined) {
+  if (buttonDisplay) {
     return (
       <Button
         variant='contained'
-        onClick={(e) => updateEventTranscript(e, eventId, setTranscript, setButtonDisplay)}
+        onClick={(e) => updateEventTranscript(e, eventId, setTranscript, setButtonDisplay, setErrorMessage)}
       >
         文字起こしをする
       </Button>
@@ -73,22 +80,31 @@ const renderTranscribeButton = (
   }
 };
 
+const renderErrorMessage = (errorDisplay: boolean) => {
+  if (errorDisplay) {
+    return (
+      <Alert severity="error">エラーが起きました。時間を置いてから再度お試しください。</Alert>
+    )
+  }
+}
+
 const updateEventTranscript = async (
   _event: React.MouseEvent<HTMLElement>,
   eventId: number,
   setTranscript: Dispatch<SetStateAction<string | undefined>>,
   setButtonDisplay: Dispatch<SetStateAction<boolean>>,
+  setErrorMessage: Dispatch<SetStateAction<boolean>>,
 ) => {
   const response = await fetch(`/api/events/${eventId}/transcript`, {
     method: 'PUT',
   });
 
-  const { event, error } = await response.json();
+  const { event } = await response.json();
   if (response.ok) {
     setTranscript(event.transcript)
     setButtonDisplay(false)
   } else {
-    // TODO: エラー時の処理を追加
-    console.log('Error', error);
+    setButtonDisplay(false)
+    setErrorMessage(true)
   }
 };

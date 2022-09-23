@@ -22,28 +22,22 @@ export default function Event(props: Props) {
         <Card sx={{ display: 'flex' }}>
           <CardContent sx={{ flex: 1 }}>
             <Typography variant='subtitle1' color='text.secondary'>
-              { props.event.createdAt }
+              { formatDateTime(props.event.createdAt) }
             </Typography>
             <Typography component='h2' variant='h5'>
-              { props.event.title }
+              {props.event.title}
             </Typography>
+            <Box mt={1.5}>{renderTranscript(transcript)}</Box>
             <Box mt={1.5}>
-              { renderTranscript(transcript) }
+              {renderTranscribeButton(
+                props.event.id,
+                buttonDisplay,
+                setTranscript,
+                setButtonDisplay,
+                setErrorDisplay
+              )}
             </Box>
-            <Box mt={1.5}>
-              {
-                renderTranscribeButton(
-                  props.event.id,
-                  buttonDisplay,
-                  setTranscript,
-                  setButtonDisplay,
-                  setErrorDisplay
-                )
-              }
-            </Box>
-            <Box mt={1.5}>
-              {renderErrorMessage(errorDisplay)}
-            </Box>
+            <Box mt={1.5}>{renderErrorMessage(errorDisplay)}</Box>
           </CardContent>
         </Card>
       </CardActionArea>
@@ -86,6 +80,15 @@ const renderErrorMessage = (errorDisplay: boolean) => {
       <Alert severity="error">エラーが起きました。時間を置いてから再度お試しください。</Alert>
     )
   }
+}
+
+const formatDateTime = (dateTime: Date) => {
+  const date = new Date(dateTime)
+  return new Intl.DateTimeFormat("ja-jp", {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).format(date);
 }
 
 const updateEventTranscript = async (

@@ -26,7 +26,7 @@ export default function Event(props: Props) {
               { props.event.title }
             </Typography>
             <Box mt={1.5}>
-              <TranscribeButton />
+              <TranscribeButton eventId={ props.event.id } />
             </Box>
           </CardContent>
         </Card>

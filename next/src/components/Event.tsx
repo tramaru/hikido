@@ -5,9 +5,10 @@ import CardActionArea from '@mui/material/CardActionArea';
 import CardContent from '@mui/material/CardContent';
 import Box from '@mui/material/Box';
 import { EventProps } from 'types/EventProps';
-import Button from '@mui/material/Button';
-import { Dispatch, SetStateAction, useState } from 'react';
-import Alert from '@mui/material/Alert';
+import { useState } from 'react';
+import Transcript from 'components/Transcript'
+import TranscribeButton from 'components/TranscribeButton';
+import ErrorMessage from './ErrorMessage';
 
 type Props = { event: EventProps }
 
@@ -27,59 +28,26 @@ export default function Event(props: Props) {
             <Typography component='h2' variant='h5'>
               {props.event.title}
             </Typography>
-            <Box mt={1.5}>{renderTranscript(transcript)}</Box>
             <Box mt={1.5}>
-              {renderTranscribeButton(
-                props.event.id,
-                buttonDisplay,
-                setTranscript,
-                setButtonDisplay,
-                setErrorDisplay
-              )}
+              <Transcript transcript={transcript} />
             </Box>
-            <Box mt={1.5}>{renderErrorMessage(errorDisplay)}</Box>
+            <Box mt={1.5}>
+              <TranscribeButton
+                eventId={props.event.id}
+                buttonDisplay={buttonDisplay}
+                setTranscript={setTranscript}
+                setButtonDisplay={setButtonDisplay}
+                setErrorMessage={setErrorDisplay}
+              />
+            </Box>
+            <Box mt={1.5}>
+              <ErrorMessage errorDisplay={errorDisplay} />
+            </Box>
           </CardContent>
         </Card>
       </CardActionArea>
     </Grid>
   );
-}
-
-const renderTranscript = (transcript: string | undefined) => {
-  if (transcript !== undefined && transcript !== "") {
-    return (
-      <Typography variant='subtitle1' color='text.secondary'>
-        {`${transcript.substr(0, 40)}...`}
-      </Typography>
-    )
-  }
-}
-
-const renderTranscribeButton = (
-  eventId: number,
-  buttonDisplay: boolean,
-  setTranscript: Dispatch<SetStateAction<string | undefined>>,
-  setButtonDisplay: Dispatch<SetStateAction<boolean>>,
-  setErrorMessage: Dispatch<SetStateAction<boolean>>,
-) => {
-  if (buttonDisplay) {
-    return (
-      <Button
-        variant='contained'
-        onClick={(e) => updateEventTranscript(e, eventId, setTranscript, setButtonDisplay, setErrorMessage)}
-      >
-        文字起こしをする
-      </Button>
-    );
-  }
-};
-
-const renderErrorMessage = (errorDisplay: boolean) => {
-  if (errorDisplay) {
-    return (
-      <Alert severity="error">エラーが起きました。時間を置いてから再度お試しください。</Alert>
-    )
-  }
 }
 
 const formatDateTime = (dateTime: Date) => {
@@ -90,24 +58,3 @@ const formatDateTime = (dateTime: Date) => {
     day: "2-digit",
   }).format(date);
 }
-
-const updateEventTranscript = async (
-  _event: React.MouseEvent<HTMLElement>,
-  eventId: number,
-  setTranscript: Dispatch<SetStateAction<string | undefined>>,
-  setButtonDisplay: Dispatch<SetStateAction<boolean>>,
-  setErrorMessage: Dispatch<SetStateAction<boolean>>,
-) => {
-  const response = await fetch(`/api/events/${eventId}/transcript`, {
-    method: 'PUT',
-  });
-
-  const { event } = await response.json();
-  if (response.ok) {
-    setTranscript(event.transcript)
-    setButtonDisplay(false)
-  } else {
-    setButtonDisplay(false)
-    setErrorMessage(true)
-  }
-};

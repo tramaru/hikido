@@ -8,7 +8,9 @@ type Props = { eventId: number }
 
 const TranscribeButton = (props: Props) => {
   return (
-    <Button onClick={(e) => updateEventTranscript(e, props.eventId) } variant='contained'>文字起こしする</Button>
+    <Button variant='contained' onClick={(event) => updateEventTranscript(event, props.eventId)}>
+      文字起こしをする
+    </Button>
   )
 }
 

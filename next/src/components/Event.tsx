@@ -26,11 +26,30 @@ export default function Event(props: Props) {
               { props.event.title }
             </Typography>
             <Box mt={1.5}>
-              <TranscribeButton eventId={ props.event.id } />
+              { renderTranscript(props.event.transcript) }
+            </Box>
+            <Box mt={1.5}>
+              { renderTranscribeButton(props.event.transcript, props.event.id) }
             </Box>
           </CardContent>
         </Card>
       </CardActionArea>
     </Grid>
   );
+}
+
+const renderTranscript = (transcript: string | undefined) => {
+  if (transcript !== undefined && transcript !== "") {
+    return (
+      <Typography variant='subtitle1' color='text.secondary'>
+        {`${transcript.substr(0, 40)}...`}
+      </Typography>
+    )
+  }
+}
+
+const renderTranscribeButton = (transcript: string | undefined, eventId: number) => {
+  if (transcript === undefined || transcript === "") {
+    return <TranscribeButton eventId={eventId} />
+  }
 }

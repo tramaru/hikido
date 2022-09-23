@@ -1,6 +1,5 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import Events from 'components/Events';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import Container from '@mui/material/Container';
@@ -8,6 +7,9 @@ import Header from 'components/Header'
 import { PrismaClient } from '@prisma/client';
 import { GetServerSideProps } from "next";
 import { EventProps } from 'types/EventProps';
+import Event from 'containers/Event';
+import Grid from '@mui/material/Grid';
+import Divider from '@mui/material/Divider';
 
 const theme = createTheme();
 
@@ -24,14 +26,21 @@ const Home: NextPage<Props> = (props: Props) => {
         <Container maxWidth='lg'>
           <Header />
           <main>
-            <Events events={ props.events } />
+            <Grid container spacing={2}>
+              <Divider />
+              <Grid container spacing={2}>
+                <Divider />
+                {props.events.map((event, _i) => (
+                  <Event key={event.id} event={event} />
+                ))}
+              </Grid>
+            </Grid>
           </main>
         </Container>
       </ThemeProvider>
     </div>
   );
 }
-
 
 export const getServerSideProps: GetServerSideProps = async () => {
   const prisma = new PrismaClient();

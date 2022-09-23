@@ -8,7 +8,7 @@ import { EventProps } from 'types/EventProps';
 import Button from '@mui/material/Button';
 import { Dispatch, SetStateAction, useState } from 'react';
 import Alert from '@mui/material/Alert';
-import React from 'react';
+import Transcribe from 'containers/Transcribe';
 
 type Props = { event: EventProps }
 
@@ -30,13 +30,7 @@ export default function Event(props: Props) {
             </Typography>
             <Box mt={1.5}>{renderTranscript(transcript)}</Box>
             <Box mt={1.5}>
-              {renderTranscribeButton(
-                props.event.id,
-                buttonDisplay,
-                setTranscript,
-                setButtonDisplay,
-                setErrorDisplay
-              )}
+              <Transcribe eventId={props.event.id} buttonDisplay={buttonDisplay} />
             </Box>
             <Box mt={1.5}>{renderErrorMessage(errorDisplay)}</Box>
           </CardContent>

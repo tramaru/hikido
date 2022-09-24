@@ -32,7 +32,6 @@ const Home: NextPage<Props> = (props: Props) => {
   );
 }
 
-
 export const getServerSideProps: GetServerSideProps = async () => {
   const prisma = new PrismaClient();
   const selectedEvents = await prisma.event.findMany();

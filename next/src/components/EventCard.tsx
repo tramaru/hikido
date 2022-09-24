@@ -9,7 +9,7 @@ import type { Event } from 'types/Event';
 
 type Props = { event: Event }
 
-export default function EventCard(props: Props) {
+const EventCard = (props: Props) => {
   return (
     <Grid item xs={12} md={6}>
       <CardActionArea component='a' href='#'>
@@ -30,3 +30,5 @@ export default function EventCard(props: Props) {
     </Grid>
   );
 }
+
+export default EventCard

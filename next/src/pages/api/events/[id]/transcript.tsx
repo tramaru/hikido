@@ -18,7 +18,7 @@ export default async function handler(
   const eventId = Number(req.query.id)
 
   if (method !== 'PUT') { return res.status(404) }
-  if (eventId === null) { return res.status(400).json({ event: {}, error: 'eventId is required' }) }
+  if (eventId === NaN) { return res.status(400).json({ event: {}, error: 'eventId is required' }) }
 
   const prisma = new PrismaClient()
   const event = await prisma.event.findUnique({

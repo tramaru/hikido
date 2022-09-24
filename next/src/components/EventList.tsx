@@ -5,7 +5,7 @@ import type { Event } from 'types/Event';
 
 type Props = { events: Event[] }
 
-const Events = (props: Props) => {
+const EventList = (props: Props) => {
   return (
     <Grid container spacing={2}>
       <Divider />
@@ -16,4 +16,4 @@ const Events = (props: Props) => {
   );
 }
 
-export default Events
+export default EventList

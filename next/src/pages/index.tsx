@@ -1,6 +1,6 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import Events from 'components/Events';
+import EventList from 'components/EventList';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import Container from '@mui/material/Container';
@@ -24,7 +24,7 @@ const Home: NextPage<Props> = (props: Props) => {
         <Container maxWidth='lg'>
           <Header />
           <main>
-            <Events events={ props.events } />
+            <EventList events={ props.events } />
           </main>
         </Container>
       </ThemeProvider>

@@ -2,11 +2,11 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { S3Client, GetObjectCommand } from '@aws-sdk/client-s3'; // ES Modules import
 import { PrismaClient } from '@prisma/client';
-import { EventProps } from 'types/EventProps';
 import { Readable } from 'stream';
+import type { Event } from 'types/Event';
 
 type Response = {
-  event: EventProps | {}
+  event: Event | {}
   error?: String
 }
 

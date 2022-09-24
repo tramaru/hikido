@@ -1,16 +1,16 @@
-import Event from 'components/Event';
+import EventCard from 'components/EventCard';
 import Grid from '@mui/material/Grid';
 import Divider from '@mui/material/Divider';
-import { EventProps } from 'types/EventProps';
+import type { Event } from 'types/Event';
 
-type Props = { events: EventProps[] }
+type Props = { events: Event[] }
 
 const Events = (props: Props) => {
   return (
     <Grid container spacing={2}>
       <Divider />
       {props.events.map((event, _i) => (
-        <Event key={event.id} event={event} />
+        <EventCard key={event.id} event={event} />
       ))}
     </Grid>
   );

@@ -7,11 +7,11 @@ import Container from '@mui/material/Container';
 import Header from 'components/Header'
 import { PrismaClient } from '@prisma/client';
 import { GetServerSideProps } from "next";
-import { EventProps } from 'types/EventProps';
+import type { Event } from 'types/Event';
 
 const theme = createTheme();
 
-type Props = { events: EventProps[] }
+type Props = { events: Event[] }
 
 const Home: NextPage<Props> = (props: Props) => {
   return (

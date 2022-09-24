@@ -5,11 +5,11 @@ import CardActionArea from '@mui/material/CardActionArea';
 import CardContent from '@mui/material/CardContent';
 import Box from '@mui/material/Box';
 import TranscribeButton from 'components/TranscribeButton';
-import { EventProps } from 'types/EventProps';
+import type { Event } from 'types/Event';
 
-type Props = { event: EventProps }
+type Props = { event: Event }
 
-export default function Event(props: Props) {
+export default function EventCard(props: Props) {
   return (
     <Grid item xs={12} md={6}>
       <CardActionArea component='a' href='#'>

@@ -32,13 +32,12 @@ const EventCard = (props: Props) => {
               <Transcript transcript={transcript} />
             </Box>
             <Box mt={1.5}>
-              <TranscribeButton
+              { buttonDisplay && <TranscribeButton
                 eventId={props.event.id}
-                buttonDisplay={buttonDisplay}
                 setTranscript={setTranscript}
                 setButtonDisplay={setButtonDisplay}
                 setErrorMessage={setErrorDisplay}
-              />
+              /> }
             </Box>
             <Box mt={1.5}>
               <ErrorMessage errorDisplay={errorDisplay} />

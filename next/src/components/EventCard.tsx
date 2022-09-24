@@ -4,15 +4,15 @@ import Card from '@mui/material/Card';
 import CardActionArea from '@mui/material/CardActionArea';
 import CardContent from '@mui/material/CardContent';
 import Box from '@mui/material/Box';
-import { EventProps } from 'types/EventProps';
 import { useState } from 'react';
 import Transcript from 'components/Transcript'
 import TranscribeButton from 'components/TranscribeButton';
 import ErrorMessage from './ErrorMessage';
+import type { Event } from 'types/Event';
 
-type Props = { event: EventProps }
+type Props = { event: Event }
 
-export default function Event(props: Props) {
+const EventCard = (props: Props) => {
   const [transcript, setTranscript] = useState(props.event.transcript)
   const [buttonDisplay, setButtonDisplay] = useState(transcript === "")
   const [errorDisplay, setErrorDisplay] = useState(false)
@@ -58,3 +58,5 @@ const formatDateTime = (dateTime: Date) => {
     day: "2-digit",
   }).format(date);
 }
+
+export default EventCard

@@ -1,17 +1,17 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import Events from 'components/Events';
+import EventList from 'components/EventList';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import Container from '@mui/material/Container';
 import Header from 'components/Header'
 import { PrismaClient } from '@prisma/client';
 import { GetServerSideProps } from "next";
-import { EventProps } from 'types/EventProps';
+import type { Event } from 'types/Event';
 
 const theme = createTheme();
 
-type Props = { events: EventProps[] }
+type Props = { events: Event[] }
 
 const Home: NextPage<Props> = (props: Props) => {
   return (
@@ -24,14 +24,13 @@ const Home: NextPage<Props> = (props: Props) => {
         <Container maxWidth='lg'>
           <Header />
           <main>
-            <Events events={ props.events } />
+            <EventList events={ props.events } />
           </main>
         </Container>
       </ThemeProvider>
     </div>
   );
 }
-
 
 export const getServerSideProps: GetServerSideProps = async () => {
   const prisma = new PrismaClient();
@@ -44,4 +43,4 @@ export const getServerSideProps: GetServerSideProps = async () => {
   }
 }
 
-export default Home;
+export default Home

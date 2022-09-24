@@ -9,7 +9,7 @@ type Props = {
   setErrorMessage: Dispatch<SetStateAction<boolean>>,
 }
 
-export default function TranscribeButton(props: Props) {
+const TranscribeButton = (props: Props) => {
   if (props.buttonDisplay) {
     return (
       <Button
@@ -44,3 +44,5 @@ const updateEventTranscript = async (
     setErrorMessage(true)
   }
 }
+
+export default TranscribeButton

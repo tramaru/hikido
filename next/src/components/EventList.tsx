@@ -9,7 +9,7 @@ const EventList = (props: Props) => {
   return (
     <Grid container spacing={2}>
       <Divider />
-      {props.events.map((event, _i) => (
+      {props.events.map((event) => (
         <EventCard key={event.id} event={event} />
       ))}
     </Grid>

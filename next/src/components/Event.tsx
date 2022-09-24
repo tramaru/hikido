@@ -7,10 +7,6 @@ import Box from '@mui/material/Box';
 import TranscribeButton from 'components/TranscribeButton';
 import { EventProps } from 'types/EventProps';
 
-// MEMO:
-//  ボタン表示の状態を持つ
-//  テキスト表示状態を持つ
-
 type Props = { event: EventProps }
 
 export default function Event(props: Props) {

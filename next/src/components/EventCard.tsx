@@ -14,8 +14,8 @@ type Props = { event: Event }
 
 const EventCard = (props: Props) => {
   const [transcript, setTranscript] = useState(props.event.transcript)
-  const [buttonDisplay, setButtonDisplay] = useState(transcript === "")
   const [errorDisplay, setErrorDisplay] = useState(false)
+  const isTranscript = (transcript === "" && !errorDisplay)
 
   return (
     <Grid item xs={12} md={6}>
@@ -32,10 +32,9 @@ const EventCard = (props: Props) => {
               <Transcript transcript={transcript} />
             </Box>
             <Box mt={1.5}>
-              { buttonDisplay && <TranscribeButton
+              { isTranscript && <TranscribeButton
                 eventId={props.event.id}
                 setTranscript={setTranscript}
-                setButtonDisplay={setButtonDisplay}
                 setErrorMessage={setErrorDisplay}
               /> }
             </Box>

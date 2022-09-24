@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  next:
+    build:
+      context: ./next
+      dockerfile: ./Dockerfile
+    tty: true
+    volumes:
+      - ./next:/app
+    ports:
+      - "3000:3000"
+    command: "yarn dev"
+  mysql:
+    image: mysql:8.0.30
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql:/var/lib/mysql
+volumes:
+  mysql:

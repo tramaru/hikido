@@ -11,15 +11,13 @@ import useEventTranscript from 'hooks/useEventTranscript'
 import { formatDateTime } from 'utility/formatDateTime'
 import type { Event } from 'types/Event';
 
-type Props = { event: Event }
-
-const EventCard = (props: Props) => {
+const EventCard: React.FC<{ event: Event }> = ({ event }) => {
   const [transcript, refetch, error] = useEventTranscript(
-    props.event.id,
-    props.event.transcript
+    event.id,
+    event.transcript
   );
 
-  const isTranscript = (transcript !== "")
+  const isTranscript = transcript !== '';
 
   return (
     <Grid item xs={12} md={6}>
@@ -27,25 +25,23 @@ const EventCard = (props: Props) => {
         <Card sx={{ display: 'flex' }}>
           <CardContent sx={{ flex: 1 }}>
             <Typography variant='subtitle1' color='text.secondary'>
-              { formatDateTime(props.event.createdAt) }
+              {formatDateTime(event.createdAt)}
             </Typography>
             <Typography component='h2' variant='h5'>
-              { props.event.title }
+              {event.title}
             </Typography>
             <Box mt={1.5}>
-              { isTranscript && <Transcript transcript={transcript} />}
+              {isTranscript && <Transcript transcript={transcript} />}
             </Box>
             <Box mt={1.5}>
-              { !isTranscript && <TranscribeButton onClick={refetch} /> }
+              {!isTranscript && <TranscribeButton onClick={refetch} />}
             </Box>
-            <Box mt={1.5}>
-              { error && <ErrorMessage /> }
-            </Box>
+            <Box mt={1.5}>{error && <ErrorMessage />}</Box>
           </CardContent>
         </Card>
       </CardActionArea>
     </Grid>
   );
-}
+};
 
 export default EventCard

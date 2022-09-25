@@ -1,7 +1,7 @@
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 
-const Header = () => {
+const Header: React.FC = () => {
   return (
     <div>
       <Toolbar sx={{ borderBottom: 1, borderColor: 'divider' }}>

@@ -4,7 +4,6 @@ import Card from '@mui/material/Card';
 import CardActionArea from '@mui/material/CardActionArea';
 import CardContent from '@mui/material/CardContent';
 import Box from '@mui/material/Box';
-import { useState } from 'react';
 import Transcript from 'components/Transcript'
 import TranscribeButton from 'components/TranscribeButton';
 import ErrorMessage from './ErrorMessage';

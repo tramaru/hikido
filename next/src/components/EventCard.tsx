@@ -30,16 +30,16 @@ const EventCard = (props: Props) => {
               { formatDateTime(props.event.createdAt) }
             </Typography>
             <Typography component='h2' variant='h5'>
-              {props.event.title}
+              { props.event.title }
             </Typography>
             <Box mt={1.5}>
               { isTranscript && <Transcript transcript={transcript} />}
             </Box>
             <Box mt={1.5}>
-              {isTranscript && <TranscribeButton onClick={refetch} /> }
+              { !isTranscript && <TranscribeButton onClick={refetch} /> }
             </Box>
             <Box mt={1.5}>
-              {error && <ErrorMessage />}
+              { error && <ErrorMessage /> }
             </Box>
           </CardContent>
         </Card>

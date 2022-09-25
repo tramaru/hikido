@@ -19,7 +19,7 @@ const EventCard = (props: Props) => {
     props.event.transcript
   );
 
-  const isTranscript = (transcript === "" && !error)
+  const isTranscript = (transcript !== "")
 
   return (
     <Grid item xs={12} md={6}>
@@ -33,7 +33,7 @@ const EventCard = (props: Props) => {
               {props.event.title}
             </Typography>
             <Box mt={1.5}>
-              <Transcript transcript={transcript} />
+              { isTranscript && <Transcript transcript={transcript} />}
             </Box>
             <Box mt={1.5}>
               {isTranscript && <TranscribeButton onClick={refetch} /> }

@@ -1,7 +1,8 @@
 import { useState } from 'react';
 
-const useEventTranscript = (id: number, initialTranscript: string | undefined): [string, () => void] => {
+const useEventTranscript = (id: number, initialTranscript: string | undefined): [string, () => void, boolean] => {
   const [transcript, setTranscript] = useState(initialTranscript ?? "")
+  const [error, setError] = useState(false)
 
   const refetch = async () => {
     const response = await fetch(`/api/events/${id}/transcript`, {
@@ -12,11 +13,11 @@ const useEventTranscript = (id: number, initialTranscript: string | undefined): 
     if (response.ok) {
       setTranscript(event.transcript)
     } else {
-      // TODO: エラーを返す
+      setError(true)
     }
   }
 
-  return [transcript, refetch]
+  return [transcript, refetch, error]
 }
 
 export default useEventTranscript

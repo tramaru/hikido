@@ -14,14 +14,12 @@ import type { Event } from 'types/Event';
 type Props = { event: Event }
 
 const EventCard = (props: Props) => {
-  const [errorDisplay, setErrorDisplay] = useState(false)
-
-  const [transcript, refetch] = useEventTranscript(
+  const [transcript, refetch, error] = useEventTranscript(
     props.event.id,
     props.event.transcript
   );
 
-  const isTranscript = (transcript === "" && !errorDisplay)
+  const isTranscript = (transcript === "" && !error)
 
   return (
     <Grid item xs={12} md={6}>
@@ -41,7 +39,7 @@ const EventCard = (props: Props) => {
               {isTranscript && <TranscribeButton onClick={refetch} /> }
             </Box>
             <Box mt={1.5}>
-              <ErrorMessage errorDisplay={errorDisplay} />
+              {error && <ErrorMessage />}
             </Box>
           </CardContent>
         </Card>

@@ -1,5 +1,4 @@
 import Button from '@mui/material/Button';
-import { Dispatch, SetStateAction } from 'react';
 
 type Props = {
   onClick: () => void;

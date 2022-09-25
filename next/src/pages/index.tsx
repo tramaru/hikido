@@ -1,4 +1,3 @@
-import type { NextPage } from 'next'
 import Head from 'next/head'
 import EventList from 'components/EventList';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -8,6 +7,7 @@ import Header from 'components/Header'
 import { PrismaClient } from '@prisma/client';
 import { GetServerSideProps } from "next";
 import type { Event } from 'types/Event';
+import type { NextPage } from 'next'
 
 const theme = createTheme();
 

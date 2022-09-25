@@ -9,6 +9,7 @@ import Transcript from 'components/Transcript'
 import TranscribeButton from 'components/TranscribeButton';
 import ErrorMessage from './ErrorMessage';
 import useEventTranscript from 'hooks/useEventTranscript'
+import { formatDateTime } from 'utility/formatDateTime'
 import type { Event } from 'types/Event';
 
 type Props = { event: Event }
@@ -46,15 +47,6 @@ const EventCard = (props: Props) => {
       </CardActionArea>
     </Grid>
   );
-}
-
-const formatDateTime = (dateTime: Date) => {
-  const date = new Date(dateTime)
-  return new Intl.DateTimeFormat("ja-jp", {
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-  }).format(date);
 }
 
 export default EventCard

@@ -8,13 +8,19 @@ import { useState } from 'react';
 import Transcript from 'components/Transcript'
 import TranscribeButton from 'components/TranscribeButton';
 import ErrorMessage from './ErrorMessage';
+import useEventTranscript from 'hooks/useEventTranscript'
 import type { Event } from 'types/Event';
 
 type Props = { event: Event }
 
 const EventCard = (props: Props) => {
-  const [transcript, setTranscript] = useState(props.event.transcript)
   const [errorDisplay, setErrorDisplay] = useState(false)
+
+  const [transcript, refetch] = useEventTranscript(
+    props.event.id,
+    props.event.transcript
+  );
+
   const isTranscript = (transcript === "" && !errorDisplay)
 
   return (
@@ -32,11 +38,7 @@ const EventCard = (props: Props) => {
               <Transcript transcript={transcript} />
             </Box>
             <Box mt={1.5}>
-              { isTranscript && <TranscribeButton
-                eventId={props.event.id}
-                setTranscript={setTranscript}
-                setErrorMessage={setErrorDisplay}
-              /> }
+              {isTranscript && <TranscribeButton onClick={refetch} /> }
             </Box>
             <Box mt={1.5}>
               <ErrorMessage errorDisplay={errorDisplay} />

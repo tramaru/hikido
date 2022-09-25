@@ -9,10 +9,14 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emotion/react": "^11.10.4",
+    "@emotion/styled": "^11.10.4",
+    "@mui/material": "^5.10.4",
     "@prisma/client": "4.2.1",
     "next": "12.2.4",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "ts-node": "^10.9.1"
   },
   "devDependencies": {
     "@types/node": "18.6.5",
@@ -22,5 +26,9 @@
     "eslint-config-next": "12.2.4",
     "prisma": "^4.2.1",
     "typescript": "4.7.4"
+  },
+  "prisma": {
+    "seed": "ts-node --compilerOptions {\"module\":\"CommonJS\"} src/prisma/seed.ts",
+    "schema": "src/prisma/schema.prisma"
   }
 }

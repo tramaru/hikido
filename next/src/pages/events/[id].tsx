@@ -3,6 +3,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Container from '@mui/material/Container';
 import Header from 'components/Header'
 import EventDetail from 'components/EventDetail';
+import { PrismaClient } from '@prisma/client';
 import type { Event } from 'types/Event'
 import type {
   NextPage,
@@ -28,7 +29,7 @@ const EventPage: NextPage<EventPageProps> = (
         <Container maxWidth='lg'>
           <Header />
           <main>
-            <EventDetail event={event}></EventDetail>
+            {event && <EventDetail event={event} />}
           </main>
         </Container>
       </ThemeProvider>
@@ -37,28 +38,29 @@ const EventPage: NextPage<EventPageProps> = (
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const apiUrl = process.env.API_BASE_URL || 'http://localhost:3000'
-
-  const response = await fetch(`${apiUrl}/api/events`)
-  const { events } = await response.json()
+  const prisma = new PrismaClient();
+  const foundEvents = await prisma.event.findMany();
+  const events = JSON.parse(JSON.stringify(foundEvents));
   const paths = events.map((event: Event) => `/events/${event.id}`)
 
   return { paths, fallback: true }
 }
 
 export const getStaticProps = async ({ params }: GetStaticPropsContext) => {
-  const apiUrl = process.env.API_BASE_URL || 'http://localhost:3000'
-
   if (!params) { throw new Error('params is undefined') }
 
   const eventId = Number(params.id)
-  const response = await fetch(`${apiUrl}/api/events?ids=${eventId}`)
-  const { events } = await response.json()
-  const event: Event = events[0]
+  const prisma = new PrismaClient();
+  const foundEvent = await prisma.event.findUnique({
+    where: {
+      id: eventId
+    }
+  })
+  const event = JSON.parse(JSON.stringify(foundEvent));
 
   return {
     props: {
-      event: event ?? {},
+      event: event,
     }
   }
 }

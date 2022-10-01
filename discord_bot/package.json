@@ -5,7 +5,7 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "start": "tsc && node --experimental-specifier-resolution=node dist/bot/bot.js"
+    "start": "tsc && node --experimental-specifier-resolution=node dist/index.js"
   },
   "devDependencies": {
     "@types/node": "^18.7.4",

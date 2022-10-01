@@ -5,7 +5,8 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "start": "tsc && node --experimental-specifier-resolution=node dist/index.js"
+    "build": "tsc",
+    "start": "node --experimental-specifier-resolution=node dist/index.js"
   },
   "devDependencies": {
     "@types/node": "^18.7.4",

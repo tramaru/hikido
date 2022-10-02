@@ -1,7 +1,6 @@
 import { formatDateTime } from 'utility/formatDateTime'
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/divider';
 import type { Event } from 'types/Event'
 
 const EventDetail: React.FC<{ event: Event }> = ( { event }) => {

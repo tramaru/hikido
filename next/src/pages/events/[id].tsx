@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Container from '@mui/material/Container';
+import Grid from '@mui/material/Grid';
 import Header from 'components/Header'
 import EventDetail from 'components/EventDetail';
 import { PrismaClient } from '@prisma/client';
@@ -21,19 +22,19 @@ const EventPage: NextPage<EventPageProps> = (
   }: EventPageProps
 ) => {
   return (
-    <div>
+    <ThemeProvider theme={theme}>
       <Head>
         <meta name='viewport' content='initial-scale=1, width=device-width' />
       </Head>
-      <ThemeProvider theme={theme}>
-        <Container maxWidth='lg'>
-          <Header />
-          <main>
+      <Container maxWidth='lg'>
+        <Header />
+        <main>
+          <Grid container spacing={2} sx={{ mt: 1 }}>
             {event && <EventDetail event={event} />}
-          </main>
-        </Container>
-      </ThemeProvider>
-    </div>
+          </Grid>
+        </main>
+      </Container>
+    </ThemeProvider>
   );
 }
 

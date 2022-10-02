@@ -25,11 +25,11 @@ export const uploadAudioFileToS3 = async (fileKey: string, fileName: string) => 
   return await s3Client.send(new PutObjectCommand(params))
 }
 
-export const uploadRecordedOggFile = async () => {
-  const now = Date.now
+export const uploadRecordedOggFile = async (title: string) => {
+  const now = Date.now()
   const fileKey = `${now}.ogg`
   const recordedFile = path.resolve(getFileDir(import.meta.url), '../../recorded_outputs/result.ogg')
-  const event: EventElement = { title: '', audioUrl: fileKey, transcriptUrl: '', transcript: '' }
+  const event: EventElement = { title, audioUrl: fileKey, transcriptUrl: '', transcript: '' }
 
   try {
     await uploadAudioFileToS3(`${Date.now()}.ogg`, recordedFile)

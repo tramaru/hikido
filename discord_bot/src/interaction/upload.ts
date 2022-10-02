@@ -8,6 +8,7 @@ export const upload = async (
   client: Client,
   connection?: VoiceConnection
 ) => {
-  await uploadRecordedOggFile()
+  const eventTitle = interaction.options.get('eventTitle')!.value as string
+  await uploadRecordedOggFile(eventTitle)
   await interaction.reply({ ephemeral: true, content: '録音ファイルをアップロードしました！' })
 }

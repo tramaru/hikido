@@ -1,17 +1,18 @@
 import Head from 'next/head'
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid';
-import Header from 'components/Header'
 import EventDetail from 'components/EventDetail';
+import Grid from '@mui/material/Grid';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { PrismaClient } from '@prisma/client';
-import type { Event } from 'types/Event'
+import Header from 'components/Header'
+
 import type {
   NextPage,
   GetStaticPaths,
   GetStaticPropsContext,
   InferGetStaticPropsType
 } from 'next';
+import type { Event } from 'types/Event'
 
 type EventPageProps = InferGetStaticPropsType<typeof getStaticProps>
 const theme = createTheme();

@@ -1,6 +1,6 @@
 import '../styles/globals.css'
-import Spiner from 'components/Spiner'
 import { useRouter } from "next/router"
+import Spiner from 'components/Spiner'
 import useLoading from 'hooks/useLoading'
 import type { AppProps } from 'next/app'
 

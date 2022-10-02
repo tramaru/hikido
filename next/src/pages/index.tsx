@@ -15,20 +15,18 @@ type Props = { events: Event[] }
 
 const Home: NextPage<Props> = (props: Props) => {
   return (
-    <div>
+    <ThemeProvider theme={theme}>
       <Head>
         <meta name='viewport' content='initial-scale=1, width=device-width' />
       </Head>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <Container maxWidth='lg'>
-          <Header />
-          <main>
-            <EventList events={ props.events } />
-          </main>
-        </Container>
-      </ThemeProvider>
-    </div>
+      <CssBaseline />
+      <Container maxWidth='lg'>
+        <Header />
+        <main>
+          <EventList events={ props.events } />
+        </main>
+      </Container>
+    </ThemeProvider>
   );
 }
 

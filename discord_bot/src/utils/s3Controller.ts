@@ -3,6 +3,7 @@ import * as Dotenv from 'dotenv'
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 import path from "node:path";
 import { getFileDir } from "./file";
+import { createEvent, EventElement } from "../model/event";
 
 Dotenv.config()
 const bucketName = process.env.S3_BUCKET
@@ -25,10 +26,14 @@ export const uploadAudioFileToS3 = async (fileKey: string, fileName: string) => 
 }
 
 export const uploadRecordedOggFile = async () => {
+  const now = Date.now
+  const fileKey = `${now}.ogg`
   const recordedFile = path.resolve(getFileDir(import.meta.url), '../../recorded_outputs/result.ogg')
+  const event: EventElement = { title: '', audioUrl: fileKey, transcriptUrl: '', transcript: '' }
 
   try {
     await uploadAudioFileToS3(`${Date.now()}.ogg`, recordedFile)
+    await createEvent(event)
   } catch (error) {
     console.error(error)
   }

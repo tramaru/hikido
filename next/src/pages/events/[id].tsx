@@ -45,7 +45,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const events = JSON.parse(JSON.stringify(foundEvents));
   const paths = events.map((event: Event) => `/events/${event.id}`)
 
-  return { paths, fallback: true }
+  return { paths, fallback: false }
 }
 
 export const getStaticProps = async ({ params }: GetStaticPropsContext) => {

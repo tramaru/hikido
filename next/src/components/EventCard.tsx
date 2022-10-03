@@ -1,12 +1,12 @@
-import Typography from '@mui/material/Typography';
-import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardActionArea from '@mui/material/CardActionArea';
 import CardContent from '@mui/material/CardContent';
-import Box from '@mui/material/Box';
-import Transcript from 'components/Transcript'
-import TranscribeButton from 'components/TranscribeButton';
 import ErrorMessage from './ErrorMessage';
+import Grid from '@mui/material/Grid';
+import TranscribeButton from 'components/TranscribeButton';
+import Transcript from 'components/Transcript'
+import Typography from '@mui/material/Typography';
 import useEventTranscript from 'hooks/useEventTranscript'
 import { formatDateTime } from 'utility/formatDateTime'
 import { useRouter } from 'next/router';

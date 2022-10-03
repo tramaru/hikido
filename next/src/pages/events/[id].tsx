@@ -12,7 +12,6 @@ import type {
   GetStaticPropsContext,
   InferGetStaticPropsType
 } from 'next';
-import type { Event } from 'types/Event'
 
 type EventPageProps = InferGetStaticPropsType<typeof getStaticProps>
 const theme = createTheme();
@@ -41,9 +40,12 @@ const EventPage: NextPage<EventPageProps> = (
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const prisma = new PrismaClient();
-  const foundEvents = await prisma.event.findMany();
-  const events = JSON.parse(JSON.stringify(foundEvents));
-  const paths = events.map((event: Event) => `/events/${event.id}`)
+  const results = await prisma.event.findMany({
+    select: {
+      id: true
+    }
+  });
+  const paths = results.map((result: { id: number }) => `/events/${result.id}`)
 
   return { paths, fallback: false }
 }

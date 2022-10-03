@@ -28,7 +28,7 @@ export const deploy = async (guild: Guild) => {
       description: '録音したファイルを S3 にアップロードします。',
       options: [
         {
-          name: 'eventTitle',
+          name: 'event-title',
           type: ApplicationCommandOptionType.String,
           description: '録音したイベント名',
           required: true

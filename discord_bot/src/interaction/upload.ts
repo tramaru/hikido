@@ -1,5 +1,6 @@
 import type { VoiceConnection } from "@discordjs/voice"
 import type { Client, CommandInteraction, Snowflake } from "discord.js"
+import { createEvent, EventElement } from "../model/event"
 import { uploadRecordedOggFile } from "../utils/s3Controller"
 import { transcribeRecoredOggFile } from "../utils/transcribe"
 
@@ -14,6 +15,9 @@ export const upload = async (
   const eventTitle = interaction.options.get('event-title')!.value as string
 
   const uploadedURL = await uploadRecordedOggFile(eventTitle, fileName)
-  await transcribeRecoredOggFile(fileName, uploadedURL)
+  const transcribedURL = await transcribeRecoredOggFile(fileName, uploadedURL)
+  const event: EventElement = { title: eventTitle, audioUrl: uploadedURL, transcriptUrl: transcribedURL, transcript: '' }
+
+  await createEvent(event)
   await interaction.reply({ ephemeral: true, content: '録音ファイルをアップロードしました！' })
 }

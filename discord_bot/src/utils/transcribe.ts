@@ -36,7 +36,9 @@ export const transcribeRecoredOggFile = async (fileName: string, s3URL: string) 
       new StartTranscriptionJobCommand(params)
     )
     console.log(data.TranscriptionJob)
+    return s3URL.replace(/ogg$/, 'json')
   } catch (err) {
     console.log('Error', err)
+    return ''
   }
 }

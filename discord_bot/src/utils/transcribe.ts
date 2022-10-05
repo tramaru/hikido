@@ -28,7 +28,7 @@ const generatedParams = (fileName: string, s3URL: string) => {
   )
 }
 
-export const transcribeRecoredOggFile = async (fileName: string, s3URL: string) => {
+export const transcribeRecordedOggFile = async (fileName: string, s3URL: string) => {
   const params = generatedParams(fileName, s3URL)
 
   try {

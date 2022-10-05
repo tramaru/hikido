@@ -4,7 +4,7 @@ import { Collection } from "discord.js"
 import { join } from "./join"
 import { leave } from "./leave"
 import { record } from "./record"
-import { upload } from "./uploadt"
+import { upload } from "./upload"
 
 export const interactionHandlers = new Collection<
   string,

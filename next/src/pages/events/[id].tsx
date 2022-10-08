@@ -1,10 +1,6 @@
-import Head from 'next/head'
-import Container from '@mui/material/Container';
 import EventDetail from 'components/EventDetail';
 import Grid from '@mui/material/Grid';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { PrismaClient } from '@prisma/client';
-import Header from 'components/Header'
 
 import type {
   NextPage,
@@ -14,7 +10,6 @@ import type {
 } from 'next';
 
 type EventPageProps = InferGetStaticPropsType<typeof getStaticProps>
-const theme = createTheme();
 
 const EventPage: NextPage<EventPageProps> = (
   {
@@ -22,19 +17,9 @@ const EventPage: NextPage<EventPageProps> = (
   }: EventPageProps
 ) => {
   return (
-    <ThemeProvider theme={theme}>
-      <Head>
-        <meta name='viewport' content='initial-scale=1, width=device-width' />
-      </Head>
-      <Container maxWidth='lg'>
-        <Header />
-        <main>
-          <Grid container spacing={2} sx={{ mt: 1 }}>
-            {event && <EventDetail event={event} />}
-          </Grid>
-        </main>
-      </Container>
-    </ThemeProvider>
+    <Grid container spacing={2} sx={{ mt: 1 }}>
+      {event && <EventDetail event={event} />}
+    </Grid>
   );
 }
 

@@ -1,10 +1,9 @@
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import DetailLinkButton from 'components/DetailLinkButton'
+import ActionButton from 'components/ActionButton'
 import ErrorMessage from './ErrorMessage';
 import Grid from '@mui/material/Grid';
-import TranscribeButton from 'components/TranscribeButton';
 import Transcript from 'components/Transcript'
 import Typography from '@mui/material/Typography';
 import useEventTranscript from 'hooks/useEventTranscript'
@@ -44,12 +43,12 @@ const EventCard: React.FC<{ event: Event }> = ({ event }) => {
           )}
           {!isTranscript && (
             <Box mb={1.5}>
-              <TranscribeButton onClick={refetch} />
+              <ActionButton onClick={refetch} variant="contained" text="文字起こしする" />
             </Box>
           )}
           {isTranscript && (
             <Box mb={1.5}>
-              <DetailLinkButton onClick={eventDetailLink()} />
+              <ActionButton onClick={eventDetailLink()} variant="outlined" text="詳細" />
             </Box>
           )}
           {error && (

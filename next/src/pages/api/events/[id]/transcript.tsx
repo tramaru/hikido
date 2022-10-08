@@ -59,13 +59,13 @@ const fetchBucket = (key: string) => {
   const client = new S3Client({
     region: 'ap-northeast-1',
     credentials: {
-      accessKeyId: `${process.env.AWS_ACCESS_KEY_ID}`,
-      secretAccessKey: `${process.env.AWS_SECRET_ACCESS_KEY}`,
+      accessKeyId: `${process.env.HIKIDO_AWS_ACCESS_KEY_ID}`,
+      secretAccessKey: `${process.env.HIKIDO_AWS_SECRET_ACCESS_KEY}`,
     },
   });
 
   const command = new GetObjectCommand({
-    Bucket: `${process.env.S3_BUCKET}`,
+    Bucket: `${process.env.HIKIDO_S3_BUCKET}`,
     Key: key,
   });
 

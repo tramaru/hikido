@@ -45,6 +45,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
       id: true
     }
   });
+  await prisma.$disconnect();
   const paths = results.map((result: { id: number }) => `/events/${result.id}`)
 
   return { paths, fallback: false }
@@ -60,6 +61,7 @@ export const getStaticProps = async ({ params }: GetStaticPropsContext) => {
       id: eventId
     }
   })
+  await prisma.$disconnect();
   const event = JSON.parse(JSON.stringify(foundEvent));
 
   return {

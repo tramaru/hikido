@@ -1,9 +1,7 @@
 import EventList from 'components/EventList';
 import { useEffect, useState } from 'react'
-import { useRouter } from 'next/router'
 import type { Event } from 'types/Event';
-import type { GetServerSideProps, NextPage } from 'next'
-import { PrismaClient } from '@prisma/client';
+import type { NextPage } from 'next'
 import SearchForm from 'components/SearchForm';
 
 type Props = { events: Event[] }

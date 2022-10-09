@@ -8,29 +8,25 @@ type Props = { events: Event[] }
 
 const Home: NextPage<Props> = () => {
   const [events, setEvents] = useState([]);
-  const [query, setQuery] = useState("")
 
   useEffect(() => {
     const fetchEvents = async () => {
-      let targetUrl = "/api/events"
-      if (query !== "") { targetUrl = `/api/events?q=${query}` }
-
-      const response = await fetch(targetUrl);
+      const response = await fetch("/api/events");
       const { events } = await response.json();
       setEvents(events);
     };
     fetchEvents();
-  }, [query])
+  }, [])
 
-  const search = () => {
-    // saeach
-    // setEvent
-
+  const search = async (keyword: string) => {
+    const response = await fetch(`/api/events?q=${keyword}`);
+    const { events } = await response.json();
+    setEvents(events);
   }
 
   return (
     <div>
-      <SearchForm onClick={search}></SearchForm>
+      <SearchForm onClick={search} />
       <EventList events={ events } />
     </div>
   );

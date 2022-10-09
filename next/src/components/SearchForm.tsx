@@ -9,6 +9,7 @@ type Search = (query: string) => void
 
 const SearchForm: React.FC<{ onClick: Search }> = ({ onClick}) => {
   const [query, setQuery] = useState("")
+  const isDisabled = (query === "")
 
   const fireSearchWhenPressedEnter = (event: KeyboardEvent<HTMLDivElement>) => {
     if (event.key === 'Enter') {
@@ -33,6 +34,7 @@ const SearchForm: React.FC<{ onClick: Search }> = ({ onClick}) => {
         }}
       />
       <Button
+        disabled={isDisabled}
         onClick={() => {
           onClick(query);
         }}

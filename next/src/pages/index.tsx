@@ -1,27 +1,41 @@
 import EventList from 'components/EventList';
-import { PrismaClient } from '@prisma/client';
-import { GetServerSideProps } from "next";
+import { useEffect, useState } from 'react'
+import { useRouter } from 'next/router'
 import type { Event } from 'types/Event';
-import type { NextPage } from 'next'
+import type { GetServerSideProps, NextPage } from 'next'
+import { PrismaClient } from '@prisma/client';
+import SearchForm from 'components/SearchForm';
 
 type Props = { events: Event[] }
 
-const Home: NextPage<Props> = (props: Props) => {
-  return (
-    <EventList events={ props.events } />
-  );
-}
+const Home: NextPage<Props> = () => {
+  const [events, setEvents] = useState([]);
+  const [query, setQuery] = useState("")
 
-export const getServerSideProps: GetServerSideProps = async () => {
-  const prisma = new PrismaClient();
-  const selectedEvents = await prisma.event.findMany();
-  await prisma.$disconnect();
-  const events = JSON.parse(JSON.stringify(selectedEvents));
-  return {
-    props: {
-      events,
-    }
+  useEffect(() => {
+    const fetchEvents = async () => {
+      let targetUrl = "/api/events"
+      if (query !== "") { targetUrl = `/api/events?q=${query}` }
+
+      const response = await fetch(targetUrl);
+      const { events } = await response.json();
+      setEvents(events);
+    };
+    fetchEvents();
+  }, [query])
+
+  const search = () => {
+    // saeach
+    // setEvent
+
   }
+
+  return (
+    <div>
+      <SearchForm onClick={search}></SearchForm>
+      <EventList events={ events } />
+    </div>
+  );
 }
 
 export default Home

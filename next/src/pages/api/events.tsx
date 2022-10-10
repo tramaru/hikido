@@ -12,10 +12,9 @@ export default async function handler(
   res: NextApiResponse<Response>
 ) {
   const { method } = req
-  // TODO: インジェクション対策を追加
   let query = ""
-  if (req.query.q !== undefined) {
-    query = [req.query.q].flat(1).join(' ')
+  if (req.query.q !== undefined || req.query.q !== "") {
+    query = [req.query.q].flat(1).join(' ');
   }
 
   if (method !== 'GET') { return res.status(404) }

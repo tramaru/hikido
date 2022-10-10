@@ -1,33 +1,22 @@
 import EventList from 'components/EventList';
-import { useEffect, useState } from 'react'
+import SearchForm from 'components/SearchForm';
+import useSearchEvent from 'hooks/useSearchEvent';
+import { Typography } from '@mui/material';
 import type { Event } from 'types/Event';
 import type { NextPage } from 'next'
-import SearchForm from 'components/SearchForm';
 
-type Props = { events: Event[] }
-
-const Home: NextPage<Props> = () => {
-  const [events, setEvents] = useState([]);
-
-  useEffect(() => {
-    const fetchEvents = async () => {
-      const response = await fetch("/api/events");
-      const { events } = await response.json();
-      setEvents(events);
-    };
-    fetchEvents();
-  }, [])
-
-  const search = async (keyword: string) => {
-    const response = await fetch(`/api/events?q=${keyword}`);
-    const { events } = await response.json();
-    setEvents(events);
-  }
+const Home: NextPage = () => {
+  const [events, search] = useSearchEvent()
 
   return (
     <div>
       <SearchForm onClick={search} />
-      <EventList events={ events } />
+      {events.length == 0 && (
+        <Typography component='h2' variant='h5' mt={6}>
+          検索結果がありませんでした。
+        </Typography>
+      )}
+      {events.length > 0 && <EventList events={events} />}
     </div>
   );
 }

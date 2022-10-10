@@ -18,5 +18,4 @@ model Event {
   updatedAt     DateTime @default(now()) @map("updated_at") @db.Timestamp(6)
 
   @@map("events")
-  @@fulltext([transcript])
 }

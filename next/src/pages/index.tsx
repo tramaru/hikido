@@ -1,27 +1,24 @@
 import EventList from 'components/EventList';
-import { PrismaClient } from '@prisma/client';
-import { GetServerSideProps } from "next";
+import SearchForm from 'components/SearchForm';
+import useSearchEvent from 'hooks/useSearchEvent';
+import { Typography } from '@mui/material';
 import type { Event } from 'types/Event';
 import type { NextPage } from 'next'
 
-type Props = { events: Event[] }
+const Home: NextPage = () => {
+  const [events, search] = useSearchEvent()
 
-const Home: NextPage<Props> = (props: Props) => {
   return (
-    <EventList events={ props.events } />
+    <div>
+      <SearchForm onClick={search} />
+      {events.length == 0 && (
+        <Typography component='h2' variant='h5' mt={6}>
+          検索結果がありませんでした。
+        </Typography>
+      )}
+      {events.length > 0 && <EventList events={events} />}
+    </div>
   );
-}
-
-export const getServerSideProps: GetServerSideProps = async () => {
-  const prisma = new PrismaClient();
-  const selectedEvents = await prisma.event.findMany();
-  await prisma.$disconnect();
-  const events = JSON.parse(JSON.stringify(selectedEvents));
-  return {
-    props: {
-      events,
-    }
-  }
 }
 
 export default Home

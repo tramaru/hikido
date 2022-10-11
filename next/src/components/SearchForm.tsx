@@ -5,7 +5,7 @@ import Grid from '@mui/material/Grid';
 
 type Search = (query: string) => void
 
-const SearchForm: React.FC<{ onClick: Search }> = ({ onClick}) => {
+const SearchForm: React.FC<{ onClick: Search }> = ({ onClick }) => {
   const [query, setQuery] = useState("")
 
   const fireSearchWhenPressedEnter = (event: KeyboardEvent<HTMLDivElement>) => {
@@ -13,6 +13,11 @@ const SearchForm: React.FC<{ onClick: Search }> = ({ onClick}) => {
       onClick(query);
     }
   };
+
+  const handlerOnClear = (textValue: string) => {
+    if (!!textValue) return
+    onClick(textValue)
+  }
 
   return (
     <Grid container sx={{ width: "30%", mx: 'auto', mt: 2 }}>
@@ -24,7 +29,11 @@ const SearchForm: React.FC<{ onClick: Search }> = ({ onClick}) => {
           InputProps={{
             type: 'search',
           }}
-          onChange={(e) => setQuery(e.target.value)}
+          onChange={(e) => {
+            const value = e.target.value
+            setQuery(value)
+            handlerOnClear(value)
+          }}
           value={query}
           onKeyPress={(e) => {
             fireSearchWhenPressedEnter(e);

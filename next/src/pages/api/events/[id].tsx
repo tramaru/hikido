@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { PrismaClient } from '@prisma/client';
+import { prisma } from 'prisma/client';
 import type { Event } from 'types/Event';
 
 type Response = {
@@ -17,7 +17,6 @@ export default async function handler(
   if (method !== 'GET') { return res.status(404) }
   if (eventId === NaN) { return res.status(400).json({ error: 'eventId is required' }) }
 
-  const prisma = new PrismaClient()
   const event = await prisma.event.findUnique({
     where: {
       id: eventId

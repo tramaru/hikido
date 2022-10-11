@@ -1,4 +1,5 @@
-import { PrismaClient } from '@prisma/client';
+import { prisma } from 'prisma/client'
+import type { PrismaClient } from '@prisma/client';
 import type { NextApiRequest, NextApiResponse } from 'next'
 import type { Event } from 'types/Event'
 
@@ -18,8 +19,6 @@ export default async function handler(
   }
 
   if (method !== 'GET') { return res.status(404) }
-
-  const prisma = new PrismaClient()
 
   try {
     const events = await findManyEventWithQuery(prisma, query)

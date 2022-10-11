@@ -1,8 +1,9 @@
-import type { NextApiRequest, NextApiResponse } from 'next'
 import { S3Client, GetObjectCommand } from '@aws-sdk/client-s3'; // ES Modules import
-import { PrismaClient } from '@prisma/client';
+import { prisma } from 'prisma/client';
 import { Readable } from 'stream';
 import type { Event } from 'types/Event';
+import type { NextApiRequest, NextApiResponse } from 'next'
+import type { PrismaClient } from '@prisma/client'
 
 type Response = {
   event: Event | {}
@@ -19,7 +20,6 @@ export default async function handler(
   if (method !== 'PUT') { return res.status(404) }
   if (eventId === NaN) { return res.status(400).json({ event: {}, error: 'eventId is required' }) }
 
-  const prisma = new PrismaClient()
   const event = await prisma.event.findUnique({
     where: {
       id: eventId

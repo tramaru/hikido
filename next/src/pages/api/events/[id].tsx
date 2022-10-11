@@ -3,8 +3,8 @@ import { prisma } from 'prisma/client';
 import type { Event } from 'types/Event';
 
 type Response = {
-  event?: Event
-  error?: String
+  event: Event | null
+  error: String | null
 }
 
 export default async function handler(
@@ -15,7 +15,7 @@ export default async function handler(
   const eventId = Number(req.query.id)
 
   if (method !== 'GET') { return res.status(404) }
-  if (eventId === NaN) { return res.status(400).json({ error: 'eventId is required' }) }
+  if (eventId === NaN) { return res.status(400).json({ event: null, error: 'eventId is required' }) }
 
   const event = await prisma.event.findUnique({
     where: {
@@ -25,7 +25,7 @@ export default async function handler(
 
   prisma.$disconnect();
 
-  if (event === null) { return res.status(404).json({ error: 'event not found' })}
+  if (event === null) { return res.status(404).json({ event: null, error: 'event not found' }) }
 
-  res.status(200).json({ event: event })
+  res.status(200).json({ event: event, error: null })
 }

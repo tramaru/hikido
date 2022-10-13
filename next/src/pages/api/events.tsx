@@ -4,8 +4,8 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import type { Event } from 'types/Event'
 
 type Response = {
-  events: Event[] | []
-  error?: string
+  events: Event[] | null
+  error: string | null
 }
 
 export default async function handler(
@@ -22,10 +22,10 @@ export default async function handler(
 
   try {
     const events = await findManyEventWithQuery(prisma, query)
-    res.status(200).json({ events: events })
-  } catch(error: any) {
+    res.status(200).json({ events: events, error: null })
+  } catch (error: any) {
     console.error(error.message)
-    res.status(500).json({ events: [], error: error.message })
+    res.status(500).json({ events: null, error: error.message })
   } finally {
     prisma.$disconnect();
   }

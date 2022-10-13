@@ -3,32 +3,14 @@ import ErrorMessage from 'components/ErrorMessage';
 import EventDetail from 'components/EventDetail';
 import Grid from '@mui/material/Grid';
 
-import type { NextPage } from 'next';
+import type { GetServerSideProps, NextPage } from 'next';
 import type { Event } from 'types/Event';
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
+import absoluteUrl from 'next-absolute-url';
 
-const EventPage: NextPage = () => {
-  const [event, setEvent] = useState<Event | undefined>()
-  const [error, setError] = useState<boolean>()
-  const router = useRouter()
-  const { id: eventId } = router.query
-
-  useEffect(() => {
-    if (!eventId) return
-    const fetchEvent = async () => {
-      const response = await fetch(`/api/events/${eventId}`)
-      const { event: fetchedEvent, error: fetchedError } = await response.json()
-      setError(!!fetchedError)
-      setEvent(fetchedEvent)
-    }
-
-    fetchEvent()
-  }, [eventId])
-
+const EventPage: NextPage<{ event: Event, error: string }> = ({ event, error }) => {
   return (
     <Grid container spacing={2} sx={{ mt: 1 }}>
-      {error && (
+      {!!error && (
         <Box mb={1.5}>
           <ErrorMessage />
         </Box>
@@ -38,4 +20,13 @@ const EventPage: NextPage = () => {
   );
 }
 
-export default EventPage
+const getServerSideProps: GetServerSideProps = async (context) => {
+  const { origin } = absoluteUrl(context.req)
+  const { id } = context.query
+  const response = await fetch(`${origin}/api/events/${id}`);
+  const { event, error } = await response.json()
+
+  return ({ props: { event, error } })
+}
+
+export { EventPage as default, getServerSideProps }

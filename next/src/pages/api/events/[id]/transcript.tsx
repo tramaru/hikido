@@ -29,10 +29,15 @@ export default async function handler(
   if (event === null) { return res.status(404).json({ event: {}, error: 'event not found' })}
   if (event.transcriptUrl === "") { return res.status(404).json({ event: {}, error: 'There is not transcriptUrl' })}
 
-  const transcript = await fetchTranscript(event.transcriptUrl)
-  const updatedEvent = await prismaUpdateEvent(prisma, eventId, transcript)
+  try {
+    const transcript = await fetchTranscript(event.transcriptUrl)
+    const updatedEvent = await prismaUpdateEvent(prisma, eventId, transcript)
 
-  res.status(200).json({ event: updatedEvent })
+    res.status(200).json({ event: updatedEvent })
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ event: {}, error: 'Internal Server Error' })
+  }
 }
 
 const fetchTranscript = async (url: string) => {

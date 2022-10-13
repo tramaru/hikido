@@ -1,9 +1,11 @@
+import ActionButton from 'components/ActionButton'
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import ActionButton from 'components/ActionButton'
 import ErrorMessage from './ErrorMessage';
 import Grid from '@mui/material/Grid';
+import LoadingButton from '@mui/lab/LoadingButton';
+import SaveIcon from '@mui/icons-material/Save';
 import Transcript from 'components/Transcript'
 import Typography from '@mui/material/Typography';
 import useEventTranscript from 'hooks/useEventTranscript'
@@ -13,7 +15,7 @@ import { useRouter } from 'next/router';
 import type { Event } from 'types/Event';
 
 const EventCard: React.FC<{ event: Event }> = ({ event }) => {
-  const [transcript, refetch, error] = useEventTranscript(
+  const [transcript, refetch, error, isLoading] = useEventTranscript(
     event.id,
     event.transcript
   );
@@ -41,14 +43,32 @@ const EventCard: React.FC<{ event: Event }> = ({ event }) => {
               <Transcript transcript={transcript} />
             </Box>
           )}
-          {!isTranscript && (
+          {!isTranscript && !isLoading && (
             <Box mb={1.5}>
-              <ActionButton onClick={refetch} variant="contained" text="文字起こしする" />
+              <ActionButton
+                onClick={refetch}
+                variant='contained'
+                text='文字起こしする'
+              />
             </Box>
+          )}
+          {isLoading && (
+            <LoadingButton
+              loading
+              endIcon={<SaveIcon />}
+              loadingPosition='end'
+              variant='contained'
+            >
+              文字起こし中
+            </LoadingButton>
           )}
           {isTranscript && (
             <Box mb={1.5}>
-              <ActionButton onClick={eventDetailLink()} variant="outlined" text="詳細" />
+              <ActionButton
+                onClick={eventDetailLink()}
+                variant='outlined'
+                text='詳細'
+              />
             </Box>
           )}
           {error && (

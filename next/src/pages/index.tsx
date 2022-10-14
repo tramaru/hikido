@@ -6,24 +6,26 @@ import type { Event } from 'types/Event';
 import type { GetServerSideProps, NextPage } from 'next'
 import absoluteUrl from 'next-absolute-url';
 import ErrorMessage from 'components/ErrorMessage';
+import Spiner from 'components/Spiner';
 
 const Home: NextPage<{ fetchedEvents: Event[], fetchedError: string }> = ({ fetchedEvents, fetchedError }) => {
-  const [events, search] = useSearchEvent(fetchedEvents)
+  const [events, search, isLoading] = useSearchEvent(fetchedEvents)
 
   return (
     <div>
       <SearchForm onClick={search} />
-      {!!fetchedError && (
+      {isLoading && <Spiner />}
+      {(!!fetchedError && !isLoading ) && (
         <Box mb={1.5} mt={1.5}>
           <ErrorMessage />
         </Box>
       )}
-      {events.length == 0 && (
+      {(events.length == 0 && !isLoading) && (
         <Typography component='h2' variant='h5' mt={6}>
           検索結果がありませんでした。
         </Typography>
       )}
-      {events.length > 0 && <EventList events={events} />}
+      {(events.length > 0 && !isLoading) && <EventList events={events} />}
     </div>
   );
 }

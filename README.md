@@ -32,3 +32,7 @@ Discord Bot
 - S3
 - Transcribe
 - Heroku
+
+![HIKIDO-Infrastructure](https://user-images.githubusercontent.com/45173523/195976153-417f43b9-55b4-4993-800e-93f6832c96ee.png)
+
+

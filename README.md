@@ -28,9 +28,9 @@ Discord Bot
 
 本番環境では以下のサービスを利用しています。
 - Vercel
-- RDS
-- S3
-- Transcribe
+- Amazon RDS
+- Amazon S3
+- Amazon Transcribe
 - Heroku
 
 ![HIKIDO-Infrastructure](https://user-images.githubusercontent.com/45173523/195976153-417f43b9-55b4-4993-800e-93f6832c96ee.png)

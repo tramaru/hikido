@@ -5,7 +5,7 @@ import { deleteFiles, getFileDir } from './file'
 
 export const mergeOggFiles = async () => {
   const fileDir = getFileDir(import.meta.url)
-  const recordingDir = path.resolve(fileDir, '../../recordings')
+  const recordingDir = path.resolve(fileDir, '../../../recordings')
 
   const oggFiles = await getOggFiles(recordingDir)
   const opts = { output: './recorded_outputs/result', export: 'ogg' }

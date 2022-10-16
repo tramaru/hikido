@@ -13,7 +13,7 @@ const getDisplayName = (userId: string, user?: User) => {
 
 const createOutputFile = (userId: string, user?: User) => {
   const fileDir = getFileDir(import.meta.url)
-  return path.resolve(fileDir, `../../recordings/${Date.now()}-${getDisplayName(userId, user)}.ogg`)
+  return path.resolve(fileDir, `../../../recordings/${Date.now()}-${getDisplayName(userId, user)}.ogg`)
 }
 
 export const createListeningStream = (receiver: VoiceReceiver, userId: string, user?: User) => {

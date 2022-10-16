@@ -27,7 +27,7 @@ export const uploadAudioFileToS3 = async (fileKey: string, fileName: string) => 
 export const uploadRecordedOggFile = async (title: string, fileName: string): Promise<string> => {
   const fileKey = `${fileName}.ogg`
   const audioUrl = `s3://${bucketName}/${fileKey}`
-  const recordedFile = path.resolve(getFileDir(import.meta.url), '../../recorded_outputs/result.ogg')
+  const recordedFile = path.resolve(getFileDir(import.meta.url), '../../../recorded_outputs/result.ogg')
 
   try {
     await uploadAudioFileToS3(fileKey, recordedFile)

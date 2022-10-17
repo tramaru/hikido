@@ -35,4 +35,70 @@ Discord Bot
 
 ![HIKIDO-Infrastructure](https://user-images.githubusercontent.com/45173523/195976153-417f43b9-55b4-4993-800e-93f6832c96ee.png)
 
+## 環境構築
 
+### 事前準備
+- Amazon S3 にて、HIKIDO で利用するようのバケットを作成してください
+- 利用する IAM の権限に S3 と Amazon Transcribe が含まれていることを確認してください
+- S3 を利用するために AWS CLI の設定をしてください
+  - [AWS CLI に関して](https://docs.aws.amazon.com/ja_jp/cli/latest/userguide/cli-configure-quickstart.html#cli-configure-quickstart-config)
+
+### HIKIDO App (Next.js)
+- `.env` 内の環境変数を設定してください
+  - AWS CLI を設定した際に利用した下記の情報を取得してください
+    - HIKIDO_AWS_ACCESS_KEY_ID
+    - HIKIDO_AWS_SECRET_ACCESS_KEY
+  - AWS S3 から下記の情報を取得してください
+    - HIKIDO_S3_BUCKET
+- Docker 利用します
+```
+% docker-compose build
+% docker-compose up
+```
+- yarn install してください
+```
+% docker-compose run --rm next yarn install
+```
+- コンテナ上の MySQL にアクセスして`hikido_development`という database を作ってください
+- マイグレーションを行ってください
+```
+% docker-compose run --rm next yarn prisma migrate dev
+```
+
+### HIKIDO Bot
+- [Homebrew](https://brew.sh/) を利用して、ffmpeg をインストールしてください
+  - https://formulae.brew.sh/formula/ffmpeg
+- Discord Bot をギルド(Discord Server) に追加してください
+  - [Discord Bot に関して](https://discordjs.guide/preparations/setting-up-a-bot-application.html#creating-your-bot)
+- `.env` ファイルを作成してください
+```console
+% cd discord_bot
+% cp .env{.sample,}
+```
+- `.env` 内の環境変数を設定してください
+  - [Developer Portal](https://discord.com/developers/applications) から下記の情報を取得してください
+    - DISCORD_TOKEN
+    - CLIENT_ID
+  - 参加しているギルド(Discord Server) から下記の情報を取得してください
+    - GUILD_ID
+  - AWS S3 から下記の情報を取得してください
+    - S3_BUCKET
+    - REGION
+- `yarn install` してください
+```console
+% yarn install
+```
+- HIKIDO Bot を起動してください
+```console
+% tsc
+% yarn start
+```
+- Discrod 側でやれること
+  - スラッシュコマンドを登録してください 
+    - 任意のチャット欄で`!deploy` と入力すると登録されます
+  - 任意のボイスチャンネルに入ってください
+    - `/join` で、ボットを参加したチャンネルに参加させてください
+  - `/record speaker: ユーザーを指定する` で、音声の対象者を指定して音声の録音をさせてください
+    - なんでも良いので少ししゃべてください 
+  - `/leave` で、ボットをチャンネルから離脱させてください
+  - `/upload event-title: イベント名を指定する` で、録音した音声を対象の S3 のバケットにアップロードします

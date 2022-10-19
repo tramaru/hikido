@@ -1,24 +1,26 @@
 # HIKIDO
 
-HIKIDO は、会議中にメモが追いつかず、後から振り返れないという問題を解決するための
-メモを気にせず議論に夢中になりたい人向けの文字起こしサービスです。
+HIKIDOは、コードリーディング会中にメモが追いつかず、後から振り返れないという問題を解決するための
 
-ユーザーは、Discord 上で会話を録音でき、録音したデータから文字起こしされた文章を生成し検索ができます。
-Google Docs のように自分自身の音声のみを文字起こしするのとは違い、複数人の音声を文字起こしの対象にできるのが特徴です。
+メモを気にせず、コードに集中したい人向けの文字起こしサービスです。
+
+ユーザーは Discord 上で会話を録音でき、それを文字起こししたものを検索できます。
+
+Google Docs のように自分の音声のみを文字起こしするのとは違い、複数人の音声を文字起こしできるのが特徴です。
 
 https://hikido.vercel.app/ にて実際に文字起こしされた文章を確認できます。
 
 ## 利用技術
 
-Frontend
+HIKIDO_web(next)
 - TypeScript: 4.7.4
-- React: 18.2.0 
+- React: 18.2.0
 - Next: 12.3.1
 - Prisma: 4.2.1
 - ESlint: 8.21.0
 - MySQL: 8.0.30
 
-Discord Bot
+HIKIDO_bot(discord_bot)
 - TypeScript: 4.7.4
 - Prisma: 4.2.1
 - FFmpeg: 5.0.1
@@ -33,7 +35,7 @@ Discord Bot
 - Amazon Transcribe
 - Heroku
 
-![HIKIDO-Infrastructure](https://user-images.githubusercontent.com/45173523/195976153-417f43b9-55b4-4993-800e-93f6832c96ee.png)
+![HIKIDO_architecture.png](./images/HIKIDO_architecture.png)
 
 ## 環境構築
 
@@ -93,12 +95,12 @@ Discord Bot
 % tsc
 % yarn start
 ```
-- Discrod 側でやれること
-  - スラッシュコマンドを登録してください 
+- Discord 側でやれること
+  - スラッシュコマンドを登録してください
     - 任意のチャット欄で`!deploy` と入力すると登録されます
   - 任意のボイスチャンネルに入ってください
     - `/join` で、ボットを参加したチャンネルに参加させてください
   - `/record speaker: ユーザーを指定する` で、音声の対象者を指定して音声の録音をさせてください
-    - なんでも良いので少ししゃべてください 
+    - なんでも良いので少ししゃべてください
   - `/leave` で、ボットをチャンネルから離脱させてください
   - `/upload event-title: イベント名を指定する` で、録音した音声を対象の S3 のバケットにアップロードします
